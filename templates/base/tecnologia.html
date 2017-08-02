@@ -14,9 +14,9 @@
 	{% endif %}
 	<div class="padding-10"></div>
 </div>{% endif %}
+{% if tecnologia %}
 <div class="flow">
 	<a href="/{{ teccategoria.slug }}/1/"><div class="alert alert-dismissible alert-success"><h4 class="text-left" data-toggle="tooltip" data-placement="bottom" title="Ver más de {{ teccategoria.titulo }}">{{ teccategoria.titulo }}</h4></div></a>
-	{% if tecnologia %}
 	{% for tecnologia in tecnologia %}
 	<div class="media">
 		<a class="pull-left" href="/autor/{{ tecnologia.autor }}/1/"><div class="avatar-60" style="background-image: url('/static/media/autor/{{ tecnologia.autor }}.jpg');"></div></a>
@@ -29,6 +29,6 @@
 		</div>
 	</div>
 	{% endfor %}
-	{% endif %}
 	<div class="padding-10"></div>
 </div>
+{% endif %}

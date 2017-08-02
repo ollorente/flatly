@@ -3,5 +3,5 @@ from .views import *
 
 
 urlpatterns = [
-    url(r'^$', indexHome, name="vista_home"),
+    url(r'^$', views.post_list),
 ]

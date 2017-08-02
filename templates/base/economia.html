@@ -14,9 +14,9 @@
 	{% endif %}
 	<div class="padding-10"></div>
 </div>{% endif %}
+{% if economia %}
 <div class="flow">
 	<a href="/{{ ecncategoria.slug }}/1/"><div class="alert alert-dismissible alert-warning"><h4 class="text-left" data-toggle="tooltip" data-placement="bottom" title="Ver más de {{ ecncategoria.titulo }}">{{ ecncategoria.titulo }}</h4></div></a>
-	{% if economia %}
 	{% for economia in economia %}
 	<div class="media">
 		<a class="pull-left" href="/autor/{{ economia.autor }}/1/"><div class="avatar-60" style="background-image: url('/static/media/autor/{{ economia.autor }}.jpg');"></div></a>
@@ -29,6 +29,6 @@
 		</div>
 	</div>
 	{% endfor %}
-	{% endif %}
 	<div class="padding-10"></div>
 </div>
+{% endif %}

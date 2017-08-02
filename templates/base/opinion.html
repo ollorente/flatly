@@ -14,9 +14,9 @@
 	{% endif %}
 	<div class="padding-10"></div>
 </div>{% endif %}
+{% if opinion %}
 <div class="flow">
 	<a href="/{{ opicategoria.slug }}/1/"><div class="alert alert-dismissible alert-danger"><h4 class="text-left" data-toggle="tooltip" data-placement="bottom" title="Ver más de {{ opicategoria.titulo }}">{{ opicategoria.titulo }}</h4></div></a>
-	{% if opinion %}
 	{% for opinion in opinion %}
 	<div class="media">
 		<a class="pull-left" href="/autor/{{ opinion.autor }}/1/"><div class="avatar-60" style="background-image: url('/static/media/autor/{{ opinion.autor }}.jpg');"></div></a>
@@ -29,6 +29,6 @@
 		</div>
 	</div>
 	{% endfor %}
-	{% endif %}
 	<div class="padding-10"></div>
 </div>
+{% endif %}

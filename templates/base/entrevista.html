@@ -14,9 +14,9 @@
 	{% endif %}
 	<div class="padding-10"></div>
 </div>{% endif %}
+{% if entrevista %}
 <div class="flow">
 	<a href="/{{ entcategoria.slug }}/1/"><div class="alert alert-dismissible alert-danger"><h4 class="text-left" data-toggle="tooltip" data-placement="bottom" title="Ver más de {{ entcategoria.titulo }}">{{ entcategoria.titulo }}</h4></div></a>
-	{% if entrevista %}
 	{% for entrevista in entrevista %}
 	<div class="media">
 		<a class="pull-left" href="/autor/{{ entrevista.autor }}/1/"><div class="avatar-60" style="background-image: url('/static/media/autor/{{ entrevista.autor }}.jpg');"></div></a>
@@ -29,6 +29,6 @@
 		</div>
 	</div>
 	{% endfor %}
-	{% endif %}
 	<div class="padding-10"></div>
 </div>
+{% endif %}

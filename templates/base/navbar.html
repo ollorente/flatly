@@ -32,16 +32,16 @@
 					<ul class="nav navbar-nav navbar-right">
 						{% if not user.is_authenticated %}
 						<li><a href="{% url 'vista_login' %}">Entrar</a></li>
-						<li class="active"><a href="{% url 'vista_registro' %}">Regístrate</a></li>
+						<li class="active"><a href="vista_registro">Regístrate</a></li>
 						{% else %}
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Apps <span class="caret"></span></a>
 							<ul class="dropdown-menu" aria-labelledby="themes">
-								{% if backoffice %}<li><a href="{% url 'vista_backoffice' %}"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> BackOffice</a></li>{% endif %}
+								{% if backoffice %}<li><a href="vista_backoffice"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> BackOffice</a></li>{% endif %}
 								<li><a href="/blog/1/"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Sala de prensa</a></li>
-								<li><a href="{% url 'vista_crearpost' %}"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Crear post</a></li>
+								<li><a href="vista_crearpost"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Crear post</a></li>
 								<li class="divider"></li>
-								<li><a href="{% url 'vista_configuracion' %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Configuración</a></li>
+								<li><a href="vista_configuracion"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Configuración</a></li>
 								<li class="divider"></li>
 								<li><a href="{% url 'vista_logout' %}">Salir</a></li>
 							</ul>

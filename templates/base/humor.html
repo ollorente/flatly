@@ -14,9 +14,9 @@
 	{% endif %}
 	<div class="padding-10"></div>
 </div>{% endif %}
+{% if humor %}
 <div class="flow">
 	<a href="/{{ humcategoria.slug }}/1/"><div class="alert alert-dismissible alert-warning"><h4 class="text-left" data-toggle="tooltip" data-placement="bottom" title="Ver más de {{ humcategoria.titulo }}">{{ humcategoria.titulo }}</h4></div></a>
-	{% if humor %}
 	{% for humor in humor %}
 	<div class="media">
 		<a class="pull-left" href="/autor/{{ humor.autor }}/1/"><div class="avatar-60" style="background-image: url('/static/media/autor/{{ humor.autor }}.jpg');"></div></a>
@@ -29,6 +29,6 @@
 		</div>
 	</div>
 	{% endfor %}
-	{% endif %}
 	<div class="padding-10"></div>
 </div>
+{% endif %}
