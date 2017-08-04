@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from . import models
+
 
 def indexHome(request):
     us = 'Home'

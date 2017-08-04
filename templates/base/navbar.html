@@ -32,7 +32,7 @@
 					<ul class="nav navbar-nav navbar-right">
 						{% if not user.is_authenticated %}
 						<li><a href="{% url 'vista_login' %}">Entrar</a></li>
-						<li class="active"><a href="vista_registro">Regístrate</a></li>
+						<li class="active"><a href="{% url 'vista_registro' %}">Regístrate</a></li>
 						{% else %}
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Apps <span class="caret"></span></a>

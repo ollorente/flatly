@@ -37,7 +37,7 @@ class Perfil(models.Model):
 	bloqueo = models.BooleanField(default=True)
 
 	def __str__(self):
-		return self.usuario
+		return self.usuario.username
 
 	class Meta:
 		ordering = ['usuario']

@@ -19,10 +19,12 @@ from django.contrib import admin
 urlpatterns = [
 #    base
     url(r'^admin/', admin.site.urls),
-    url(r'^$', include('apps.home.urls')),
+    url(r'^', include('apps.home.urls')),
 
 #    comunes
     url(r'^login/', include('apps.login.urls'), name="login"),
+	url(r'^registro/', include('apps.registro.urls'), name='registro'),
+	url(r'^blog/(?P<v>[\w-]+)/', include('apps.blog.urls'), name='blog'),
 
 #    dinamicos
 ]

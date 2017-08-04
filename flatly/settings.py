@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'apps.author',
     'apps.home',
     'apps.login',
+    'apps.post',
+    'apps.registro',
 ]
 
 MIDDLEWARE = [

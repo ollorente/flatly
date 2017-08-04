@@ -1,4 +1,7 @@
 {% load staticfiles %}
-{% if ads %}
-<div class="padding-10 text-center" style="border-top:solid 1px #ccc; border-bottom:solid 1px #ddd; margin-bottom:10px;"><a href="."><img src="/static/media/ads/1-20170612011149.gif" style="width:100%; max-width:728px;"></a></div>
+<div class="pub-lineas padding-10 text-center" style="border-top:solid 1px #ccc; border-bottom:solid 1px #ddd; margin-bottom:10px;">
+{% if not ads %}
+<a href="."><img src="/static/media/ads/1-20170612011149.gif" style="width:100%; max-width:728px;"></a>
+{% else %}
 {% endif %}
+</div>

@@ -149,3 +149,8 @@ img{
 .flow {
 	overflow: auto;
 }
+.pub-lineas {
+	border-top:solid 1px #ccc;
+	border-bottom:solid 1px #ddd;
+	margin-bottom:10px;
+}
