@@ -1,26 +1,21 @@
 {% load staticfiles %}
-{% if categoria %}
+{% if autor %}
 <div>
-	<p><a href="/autor/{{ categoria.username|escape }}/1/"><img src="/static/media/autor/{{ categoria.username|escape }}.jpg" alt="{{ categoria.titulo|escape }}" class="img-rounded" style="width:100%;"></a></p>
-	<h4><a href="/autor/{{ categoria.username|escape }}/1/" class="text-primary">{{ categoria.first_name|escape }} {{ categoria.last_name|escape }}</a></h4>
-	<p class="small">Desde <span><b>{{ categoria.date_joined|date:'M j, Y' }}</b></span></p>
-	{% if autor %}
-	{% for autor in autor %}
-	<p>{% if autor.ciudad %}<span>{{ autor.ciudad|escape }}{% if autor.estado %} - {{ autor.estado|escape }}{% endif %}</span><br>{% endif %}{% if autor.pais %}<span><b>{{ autor.pais|escape }}</b></span>{% endif %}</p>
-	{% endfor %}
-	{% endif %}
-	<p><span class="label label-default"><b>{{ postcount }}</b> post</span></p>
-</div>
-{% else %}
-<div>
-	<p><a href="/autor/{{ user.username|escape }}/1/"><img src="/static/media/autor/{{ user.username|escape }}.jpg" alt="{{ user.titulo|escape }}" class="img-rounded" style="width:100%;"></a></p>
-	<h4><a href="/autor/{{ user.username|escape }}/1/" class="text-primary">{{ user.first_name|escape }} {{ user.last_name|escape }}</a></h4>
-	<p class="small">Desde <span><b>{{ user.date_joined|date:'M j, Y' }}</b></span></p>
-	{% if autor %}
-	{% for autor in autor %}
-	<p>{% if autor.ciudad %}<span>{{ autor.ciudad|escape }}{% if autor.estado %} - {{ autor.estado|escape }}{% endif %}</span>{% endif %}{% if autor.pais %}<br><span><b>{{ autor.pais|escape }}</b></span>{% endif %}</p>
-	{% endfor %}
-	{% endif %}
+	<p><a href="/autor/{{ autor.username|escape }}/1/"><img src="/static/media/autor/{{ autor.username|escape }}.jpg" alt="{{ autor.titulo|escape }}" class="img-rounded" style="width:100%;"></a></p>
+	<h4><a href="/autor/{{ autor.username|escape }}/1/" class="text-primary">{{ autor.first_name|escape }} {{ autor.last_name|escape }}</a></h4>
+	<p class="small">Desde <span><b>{{ autor.date_joined|date:'M j, Y' }}</b></span></p>
+	<p>{% if perfil.ciudad %}<span>{{ perfil.ciudad|escape }}{% if perfil.estado %} - {{ perfil.estado|escape }}{% endif %}</span><br>{% endif %}{% if perfil.pais %}<span><b>{{ perfil.pais|escape }}</b></span>{% endif %}</p>
+	{% if perfil.web %}<p><a href="{{ perfil.web }}" target="_blank">{{ perfil.web }}</a></p>{% endif %}
+	<p>
+		{% if perfil.facebook %}<a href="https://www.facebook.com/{{ perfil.facebook }}/" target="_blank"><img src="{% static '/media/png/glyphicons-social-31-facebook.png' %}" alt="Facebook"></a>{% endif %}
+		{% if perfil.twitter %}<a href="https://www.twitter.com/{{ perfil.twitter }}/" target="_blank"><img src="{% static '/media/png/glyphicons-social-32-twitter.png' %}" alt="Twitter"></a>{% endif %}
+		{% if perfil.youtube %}<a href="https://www.youtube.com/user/{{ perfil.youtube }}/" target="_blank"><img src="{% static '/media/png/glyphicons-social-23-youtube.png' %}" alt="Youtube"></a>{% endif %}
+		{% if perfil.linkedin %}<a href="https://co.linkedin.com/in/{{ perfil.linkedin }}/" target="_blank"><img src="{% static '/media/png/glyphicons-social-18-linked-in.png' %}" alt="Linkedin"></a>{% endif %}
+		{% if perfil.google %}<a href="https://plus.google.com/{{ perfil.google }}/" target="_blank"><img src="{% static '/media/png/glyphicons-social-3-google-plus.png' %}" alt="Google"></a>{% endif %}
+		{% if perfil.pinterest %}<a href="https://cl.pinterest.com/{{ perfil.pinterest }}/" target="_blank"><img src="{% static '/media/png/glyphicons-social-1-pinterest.png' %}" alt="Pinterest"></a>{% endif %}
+		{% if perfil.instagram %}<a href="https://www.instagram.com/{{ perfil.instagram }}/" target="_blank"><img src="{% static '/media/png/glyphicons-social-33-instagram.png' %}" alt="Instagram"></a>{% endif %}
+		{% if perfil.blogger %}<a href="https://{{ perfil.blogger }}/" target="_blank"><img src="{% static '/media/png/glyphicons-social-6-blogger.png' %}" alt="Blogger"></a>{% endif %}
+	</p>
 	<p><span class="label label-default"><b>{{ postcount }}</b> post</span></p>
 </div>
 {% endif %}

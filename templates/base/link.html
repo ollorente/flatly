@@ -4,7 +4,7 @@
 	{% for link in link %}
 	<li class="list-group-item">
 		<span class="badge">{{ link.vistas }}</span>
-		<a href="/{{ link.categoria.slug }}/{{ link.id }}/{{ link.slug }}">{{ link.titulo }}</a>
+		<a href="/p/{{ link.categoria.slug }}/{{ link.id }}/{{ link.slug }}">{{ link.titulo }}</a>
 	</li>
 	{% endfor %}
 </ul>
@@ -14,7 +14,7 @@
 	{% for link2 in link2 %}
 	<li class="list-group-item">
 		<span class="badge">{{ link2.vistas }}</span>
-		<a href="/{{ link2.categoria.slug }}/{{ link2.id }}/{{ link2.slug }}">{{ link2.titulo }}</a>
+		<a href="/p/{{ link2.categoria.slug }}/{{ link2.id }}/{{ link2.slug }}">{{ link2.titulo }}</a>
 	</li>
 	{% endfor %}
 </ul>

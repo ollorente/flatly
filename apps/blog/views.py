@@ -1,6 +1,33 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, InvalidPage
 
 
+def indexBlog(request, v):
+	if request.user.is_authenticated():
+		us = 'Home'
+		uslink = '/'
+		vs = 'Blog'
+		vslink = '/blog/1/'
+		ws = v
+		context = {
+			'us':us,
+			'uslink':uslink,
+			'vs':vs,
+			'vslink':vslink,
+			'ws':ws,
+		}
+		return render(request, 'blog/index.html', context)
+	else:
+		return HttpResponseRedirect('/')
+
+
+"""
 def indexBlog(request, v):
 	if request.user.is_authenticated():
 		categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
@@ -40,3 +67,4 @@ def indexBlog(request, v):
 		return render(request, 'blog/index.html', context)
 	else:
 		return HttpResponseRedirect('/')
+"""

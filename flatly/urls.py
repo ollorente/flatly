@@ -22,9 +22,13 @@ urlpatterns = [
     url(r'^', include('apps.home.urls')),
 
 #    comunes
+#    url(r'^crear-post/', include('apps.post.urls'), name="crear-post"),
     url(r'^login/', include('apps.login.urls'), name="login"),
 	url(r'^registro/', include('apps.registro.urls'), name='registro'),
-	url(r'^blog/(?P<v>[\w-]+)/', include('apps.blog.urls'), name='blog'),
+	url(r'^blog/(?P<v>\d+)/', include('apps.blog.urls'), name='blog'),
 
 #    dinamicos
+	url(r'^autor/', include('apps.author.urls'), name='autor'),
+#	url(r'^(?P<u>[\w-]+)/(?P<v>\d+)/$', include('apps.categoria.urls'), name='categoria'),
+	url(r'^p/', include('apps.author.urls'), name='post'),
 ]

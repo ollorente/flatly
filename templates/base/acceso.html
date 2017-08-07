@@ -5,3 +5,11 @@
 	{% for acceso in acceso %}<option value="{{ acceso.id }}">{{ acceso.tipo }}</option>{% endfor %}
 </select>
 {% endif %}
+<label for="Titulo">Acceso</label>
+<select class="form-control" id="select">
+	<option selected>-- Seleccione tipo de acceso --</option>
+	<option value="2">Logueago</option>
+	<option value="4">Privado</option>
+	<option value="1" selected>Público</option>
+	<option value="3">Seguidor</option>
+</select>

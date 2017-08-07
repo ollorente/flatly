@@ -4,10 +4,10 @@
 	{% for autor in autor %}
 	<div class="media">
 		<div class="media-left">
-			<a href="/autor/{{ autor.user.username|escape }}/1/"><div class="avatar-60" style="background-image:url(/static/media/autor/{{ autor.user.username|escape }}.jpg);" alt="{{ autor.user.first_name|escape }} {{ autor.user.last_name|escape }}"></div></a>
+			<a href="/autor/{{ autor.username|escape }}/1/"><div class="avatar-60" style="background-image:url(/static/media/autor/{{ autor.username|escape }}.jpg);" alt="{{ autor.first_name|escape }} {{ autor.last_name|escape }}"></div></a>
 		</div>
 		<div class="media-body">
-			<h4 class="media-heading"><a href="/autor/{{ autor.user.username|escape }}/1/">{{ autor.user.first_name|escape }} {{ autor.user.last_name|escape }}</a></h4>
+			<h4 class="media-heading"><a href="/autor/{{ autor.username|escape }}/1/">{{ autor.first_name|escape }} {{ autor.last_name|escape }}</a></h4>
 			<p class="small">{% if autor.ciudad %}<span>{{ autor.ciudad }}</span>{% if autor.estado %} - <span>{{ autor.estado }}</span>{% endif %}{% endif %}{% if autor.ciudad and autor.pais %}<br>{% endif %}{% if autor.pais %}<span><b>{{ autor.pais }}</b></span>{% endif %}</p>
 		</div>
 	</div>

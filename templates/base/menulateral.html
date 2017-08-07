@@ -1,3 +1,4 @@
+{% if user.is_authenticated %}
 <div>
 	<ul class="nav nav-pills nav-stacked">
 		<li>
@@ -10,9 +11,10 @@
 				</div>
 			</div>
 		</li>
-		<li><a href="/backoffice/">Mis artículos</a></li>
-		<li><a href="/backoffice/">Comentarios</a></li>
-		<li><a href="/backoffice/">Mis seguidores</a></li>
-		<li><a href="/backoffice/">Los que sigo</a></li>
+		<li><a href="/backoffice/mis-post/1/">Mis artículos</a></li>
+		<li><a href="/backoffice/comentarios/1/">Comentarios</a></li>
+		<li><a href="/backoffice/mis-seguidores/1/">Mis seguidores</a></li>
+		<li><a href="/backoffice/los-que-sigo/1/">Los que sigo</a></li>
 	</ul>
 </div>
+{% endif %}

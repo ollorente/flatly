@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.contrib import admin
 from django.contrib.auth.models import User
 
@@ -5,7 +8,7 @@ from .models import *
 
 
 class AdminTipoacceso(admin.ModelAdmin):
-    list_display = ["__str__"]
+    list_display = ["__str__", "pk"]
     class Meta:
         model = Tipoacceso
 

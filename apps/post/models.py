@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
@@ -11,6 +14,9 @@ class Tipoacceso(models.Model):
 
 	def __str__(self):
 		return self.tipo
+
+	class Meta:
+		ordering = ['tipo']
 
 
 class Categoria(models.Model):

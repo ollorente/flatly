@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'apps.author',
+    'apps.backoffice',
+    'apps.buscar',
     'apps.home',
     'apps.login',
-    'apps.post',
+#    'apps.post',
     'apps.registro',
 ]
 
