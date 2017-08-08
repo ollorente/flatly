@@ -5,7 +5,8 @@
 	<form method="post">
 		{% csrf_token %}
 		<div class="form-group">
-			<textarea class="form-control" rows="2" maxlength="254" placeholder="Comentar..." name="comentar" required>{{ comentar }}</textarea>
+			<textarea class="form-control" rows="2" maxlength="254" placeholder="Comentar..." name="comentario" required>{{ comentar }}</textarea>
+			<input type="hidden" name="posts" value="{{ post.pk }}">
 		</div>
 		<button type="submit" class="btn btn-default">Comentar</button>
 	</form>

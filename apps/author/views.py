@@ -4,9 +4,12 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import Http404
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 
 from .models import *
+from .forms import *
 
 
 def indexHome(request):
@@ -105,9 +108,9 @@ def indexAutores(request, v):
 def indexAutor(request, v, w):
     categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
     autor = User.objects.get(username=v, is_active=True, is_staff=False)
-#    perfil = Perfil.objects.get(usuario=autor, activo=True, bloqueo=True)
     post = Post.objects.filter(autor=autor, activo=True, bloqueo=True)
     postcount = Post.objects.filter(autor=autor, activo=True, bloqueo=True).count()
+    perfil = Perfil.objects.get(usuario=autor, activo=True, bloqueo=True)
     titulo = User.objects.get(username=v, is_active=True, is_staff=False)
     link = Post.objects.filter(autor=autor, activo=True, bloqueo=True).order_by('-vistas')[:10]
     paginator = Paginator(post, 10)
@@ -129,7 +132,7 @@ def indexAutor(request, v, w):
         'categorias':categorias,
         'autor':autor,
         'link':link,
-#        'perfil':perfil,
+        'perfil':perfil,
         'post':post,
         'postcount':postcount,
         'titulo':titulo,
@@ -158,58 +161,103 @@ def indexPost_crear(request):
 
 
 def indexPost(request, u, v, w):
-	categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
-	acceso = Tipoacceso.objects.all()
-	categoria = Categoria.objects.get(slug=u, activo=True, bloqueo=True)
-	post = Post.objects.get(id=v, activo=True, bloqueo=True)
-	link = Post.objects.filter(categoria=categoria.id, activo=True, bloqueo=True).order_by('-vistas')[:10]
-	us = 'Home'
-	uslink = '/'
-	vs = categoria.titulo
-	vslink = '/' + categoria.slug + '/1/'
-	ws = post.titulo
-	context = {
-        'categorias':categorias,
-		'acceso':acceso,
-		'categoria':categoria,
-		'post':post,
-		'link':link,
-		'us':us,
-		'uslink':uslink,
-		'vs':vs,
-		'vslink':vslink,
-		'ws':ws,
-	}
-	return render(request, 'post/index.html', context)
-
-
-def indexPost_editar(request, v, w, x):
+    if request.method == "POST":
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.usuario = request.user
+            comentario.fecha = timezone.now()
+            comentario.save()
+            categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
+            acceso = Tipoacceso.objects.all()
+            categoria = Categoria.objects.get(slug=u, activo=True, bloqueo=True)
+            post = Post.objects.get(id=v, activo=True, bloqueo=True)
+            comentario = Comentario.objects.filter(posts=v)[:10]
+            comentariocount = Comentario.objects.filter(posts=v).count()
+            link = Post.objects.filter(categoria=categoria.id, activo=True, bloqueo=True).order_by('-vistas')[:10]
+            us = 'Home'
+            uslink = '/'
+            vs = categoria.titulo
+            vslink = '/' + categoria.slug + '/1/'
+            ws = post.titulo
+            context = {
+                'categorias':categorias,
+                'acceso':acceso,
+                'categoria':categoria,
+                'post':post,
+                'comentario':comentario,
+                'comentariocount':comentariocount,
+                'link':link,
+                'us':us,
+                'uslink':uslink,
+                'vs':vs,
+                'vslink':vslink,
+                'ws':ws,
+                'form': form,
+            }
+            return render(request, 'post/index.html', context)
+    else:
+        form = ComentarioForm()
     categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
-    categoria = User.objects.get(username=v, is_active=True, is_staff=False)
-    cat = Categoria.objects.filter(activo=True, bloqueo=True).order_by('titulo')
-    post = Post.objects.get(id=w, activo=True, bloqueo=True)
-    link = Post.objects.filter(activo=True, bloqueo=True).order_by('-vistas')[:10]
+    acceso = Tipoacceso.objects.all()
+    categoria = Categoria.objects.get(slug=u, activo=True, bloqueo=True)
+    post = Post.objects.get(id=v, activo=True, bloqueo=True)
+    comentario = Comentario.objects.filter(posts=v)[:10]
+    comentariocount = Comentario.objects.filter(posts=v).count()
+    link = Post.objects.filter(categoria=categoria.id, activo=True, bloqueo=True).order_by('-vistas')[:10]
     us = 'Home'
     uslink = '/'
-    vs = categoria.first_name + ' ' + categoria.last_name
-    vslink = '/autor/' + categoria.username + '/1/'
-    ws = 'Editar'
-    wslink = '/backoffice/mis-post/1/'
-    xs = post.titulo
+    vs = categoria.titulo
+    vslink = '/' + categoria.slug + '/1/'
+    ws = post.titulo
     context = {
         'categorias':categorias,
-        'cat':cat,
+        'acceso':acceso,
+        'categoria':categoria,
         'post':post,
+        'comentario':comentario,
+        'comentariocount':comentariocount,
         'link':link,
         'us':us,
         'uslink':uslink,
         'vs':vs,
         'vslink':vslink,
         'ws':ws,
-        'wslink':wslink,
-        'xs':xs,
+        'form': form,
     }
-    return render(request, 'post/post_editar.html', context)
+    return render(request, 'post/index.html', context)
+
+
+def indexPost_editar(request, v, w, x):
+    if request.user.username == v:
+        categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
+        categoria = User.objects.get(username=v, is_active=True, is_staff=False)
+        cat = Categoria.objects.filter(activo=True, bloqueo=True).order_by('titulo')
+        post = Post.objects.get(id=w, activo=True, bloqueo=True)
+        link = Post.objects.filter(activo=True, bloqueo=True).order_by('-vistas')[:10]
+        us = 'Home'
+        uslink = '/'
+        vs = categoria.first_name + ' ' + categoria.last_name
+        vslink = '/autor/' + categoria.username + '/1/'
+        ws = 'Editar'
+        wslink = '/backoffice/mis-post/1/'
+        xs = post.titulo
+        context = {
+            'categorias':categorias,
+            'cat':cat,
+            'post':post,
+            'link':link,
+            'us':us,
+            'uslink':uslink,
+            'vs':vs,
+            'vslink':vslink,
+            'ws':ws,
+            'wslink':wslink,
+            'xs':xs,
+        }
+        return render(request, 'post/post_editar.html', context)
+    else:
+        return HttpResponseRedirect('/')
 
 
 def indexCategoria(request, u, v):

@@ -37,8 +37,14 @@ class AdminPost(admin.ModelAdmin):
         model = Post
 
 
+class AdminComentario(admin.ModelAdmin):
+    list_display = ["fecha", "__str__", "usuario", "pk"]
+    model = Comentario
+
+
+admin.site.register(Pais, AdminPais)
+admin.site.register(Perfil, AdminPerfil)
 admin.site.register(Tipoacceso, AdminTipoacceso)
 admin.site.register(Categoria, AdminCategoria)
 admin.site.register(Post, AdminPost)
-admin.site.register(Pais, AdminPais)
-admin.site.register(Perfil, AdminPerfil)
+admin.site.register(Comentario, AdminComentario)

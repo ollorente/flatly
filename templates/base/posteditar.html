@@ -1,5 +1,6 @@
 {% if user.is_authenticated %}
 <div>
+	<div class="alert alert-dismissable alert-info text-right"><a href="/{{ post.categoria.slug }}/{{ post.id }}/{{ post.slug }}/" class="btn btn-link btn-xs" style="color:#fff;">Volver</a></div>
 	<h2 class="text-center"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Editar post</h2>
 	<hr>
 	<form method="POST">

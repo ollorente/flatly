@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class Pais(models.Model):
@@ -96,3 +97,16 @@ class Post(models.Model):
 
 	class Meta:
 		ordering = ['-fechacreado']
+
+
+class Comentario(models.Model):
+	posts = models.ForeignKey(Post, null=True, blank=True, on_delete=models.CASCADE)
+	usuario = models.ForeignKey('auth.User')
+	comentario = models.TextField(max_length=255)
+	fecha = models.DateTimeField(default=timezone.now)
+
+	def __str__(self):
+		return self.posts
+
+	class Meta:
+		ordering = ['-fecha']
