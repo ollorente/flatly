@@ -39,9 +39,9 @@
 							<ul class="dropdown-menu" aria-labelledby="themes">
 								{% if backoffice %}<li><a href="vista_backoffice"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> BackOffice</a></li>{% endif %}
 								<li><a href="/blog/1/"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Blog</a></li>
-								<li><a href="/crear-post/"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Crear post</a></li>
+								<li><a href="{% url 'vista_post_crear' %}"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Crear post</a></li>
 								<li class="divider"></li>
-								<li><a href="vista_configuracion"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Configuración</a></li>
+								<li><a href="{% url 'vista_configuracion' %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Configuración</a></li>
 								<li class="divider"></li>
 								<li><a href="{% url 'vista_logout' %}">Salir</a></li>
 							</ul>

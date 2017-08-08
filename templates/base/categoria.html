@@ -2,23 +2,6 @@
 <label for="Categoria">Categoría</label>
 <select class="form-control" id="select" name="categoria">
 	<option selected>-- Seleccione una categoría --</option>
-	{% for cat in cat %}<option value="{{ cat.id }}">{{ cat.titulo|escape }}</option>{% endfor %}
+	{% for cat in cat %}<option value="{{ cat.id }}" {% if cat.id == post.categoria.id %}selected{% endif %}>{{ cat.titulo|escape }}</option>{% endfor %}
 </select>
 {% endif %}
-<label for="Categoria">Categoría</label>
-<select class="form-control" id="select" name="categoria">
-	<option selected>-- Seleccione una categoría --</option>
-	<option value="4">Al oido</option>
-	<option value="1" selected>Descategorizado</option>
-	<option value="13">Economía</option>
-	<option value="11">Ecos Bogotá</option>
-	<option value="5">Humor</option>
-	<option value="7">Internacional</option>
-	<option value="9">Entrevista</option>
-	<option value="2">Noticias</option>
-	<option value="3">Opinión</option>
-	<option value="10">Personaje</option>
-	<option value="6">Región</option>
-	<option value="12">Tecnología</option>
-	<option value="8">Videos</option>
-</select>

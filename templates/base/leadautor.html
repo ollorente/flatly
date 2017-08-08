@@ -5,7 +5,7 @@
 	{% for post in post %}
 	<div class="media">
 		<div class="media-body">
-			<h3 class="media-heading"><a href="/p/{{ post.categoria.slug|escape }}/{{ post.id }}/{{ post.slug|escape }}">{{ post.titulo|escape }}</a></h3>
+			<h3 class="media-heading"><a href="/{{ post.categoria.slug|escape }}/{{ post.id }}/{{ post.slug|escape }}">{{ post.titulo|escape }}</a></h3>
 			<p>{{ post.contenido|escape|truncatewords:"35" }}</p>
 			<p class="small"><span><b>{{ post.fechacreado }}</b></span> - <a href="/{{ post.categoria.slug|escape }}/1/"><span>{{ post.categoria|escape }}</span></a></p>
 		</div>

@@ -1,19 +1,4 @@
 {% load staticfiles %}
-{% if flows %}<div class="flow">
-	<a href="/{{ notcategoria.slug }}/1/"><div class="alert alert-dismissible alert-info"><h4 class="text-left" data-toggle="tooltip" data-placement="bottom" title="Ver más de {{ notcategoria.titulo }}">{{ notcategoria.titulo }}</h4></div></a>
-	{% if noticia %}
-	{% for noticia in noticia %}
-	<div class="media">
-		<div class="media-body">
-			<h3 class="media-heading"><a href="/{{ noticia.categoria.slug }}/{{ noticia.id }}/{{ noticia.slug }}">{{ noticia.titulo }}</a></h3>
-			<p>{{ noticia.contenido|truncatewords:"20" }}</p>
-			<p class="small"><span><b>{{ noticia.fechacreado }}</b></span><br><a href="/autor/{{ noticia.autor }}/1/"><span>{{ noticia.autor.user.first_name }} {{ noticia.autor.user.last_name }}</span></a></p>
-		</div>
-	</div>
-	{% endfor %}
-	{% endif %}
-	<div class="padding-10"></div>
-</div>{% endif %}
 {% if noticia %}
 <div class="flow">
 	<a href="/{{ notcategoria.slug }}/1/"><div class="alert alert-dismissible alert-info"><h4 class="text-left" data-toggle="tooltip" data-placement="bottom" title="Ver más de {{ notcategoria.titulo }}">{{ notcategoria.titulo }}</h4></div></a>
@@ -25,7 +10,7 @@
 		</div>
 		<div class="media-footer">
 			<p>{{ noticia.contenido|truncatewords:"20" }}</p>
-			<p class="small"><span><b>{{ noticia.fechacreado }}</b></span><br><a href="/autor/{{ noticia.autor }}/1/"><span>{{ noticia.autor.user.first_name }} {{ noticia.autor.user.last_name }}</span></a></p>
+			<p class="small"><span><b>{{ noticia.fechacreado }}</b></span><br><a href="/autor/{{ noticia.autor }}/1/"><span>{{ noticia.autor.first_name }} {{ noticia.autor.last_name }}</span></a></p>
 		</div>
 	</div>
 	{% endfor %}

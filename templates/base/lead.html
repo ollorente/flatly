@@ -5,12 +5,12 @@
 	{% for post in post %}
 	<div class="media">
 		<div class="media-left">
-			<a href="/autor/{{ post.autor|escape }}/1/"><div class="img-avatar" style="background-image:url(/static/media/autor/{{ post.autor|escape }}.jpg);" alt="{{ post.titulo|escape }}"></div></a>
+			<a href="/autor/{{ post.autor|escape }}/1/"><div class="img-avatar" style="background-image:url(/static/media/autor/{{ post.autor|escape }}.jpg);" alt="{{ post.autor.first_name|escape }} {{ post.autor.last_name|escape }}"></div></a>
 		</div>
 		<div class="media-body">
 			<h3 class="media-heading"><a href="/{{ post.categoria.slug|escape }}/{{ post.id }}/{{ post.slug|escape }}">{{ post.titulo|escape }}</a></h3>
 			<p>{{ post.contenido|escape|truncatewords:"35" }}</p>
-			<p class="small"><span><b>{{ post.fechacreado }}</b></span> - <a href="/autor/{{ post.autor|escape }}/1/"><span>{{ post.autor.user.first_name|escape }} {{ post.autor.user.last_name|escape }}</span></a></p>
+			<p class="small"><span><b>{{ post.fechacreado }}</b></span> - <a href="/autor/{{ post.autor|escape }}/1/"><span>{{ post.autor.first_name|escape }} {{ post.autor.last_name|escape }}</span></a></p>
 		</div>
 	</div>
 	{% endfor %}

@@ -3,7 +3,7 @@
 	{% if post %}
 		<div itemscope itemtype="http://schema.org/Article">
 			{% if post.autor.id == user.id %}
-			<div class="well well-sm text-right"><a href="/editar/{{ post.autor }}/{{ post.id }}/" class="btn btn-link btn-xs text-primary">Editar</a></div>
+			<div class="well well-sm text-right"><a href="/editar/{{ post.autor }}/{{ post.id }}/{{ post.slug }}/" class="btn btn-link btn-xs text-primary">Editar</a></div>
 			{% endif %}
 			<p><span><b>{{ post.fechacreado }}</b></span></p>
 			<h1 class="text-left" itemprop="name">{{ post.titulo }}</h1>

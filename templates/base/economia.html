@@ -1,19 +1,4 @@
 {% load staticfiles %}
-{% if flows %}<div class="flow">
-	<a href="/{{ ecncategoria.slug|escape }}/1/"><div class="alert alert-dismissible alert-warning"><h4 class="text-left" data-toggle="tooltip" data-placement="bottom" title="Ver más de {{ ecncategoria.titulo|escape }}">{{ ecncategoria.titulo|escape }}</h4></div></a>
-	{% if economia %}
-	{% for economia in economia %}
-	<div class="media">
-		<div class="media-body">
-			<h3 class="media-heading"><a href="/{{ economia.categoria.slug|escape }}/{{ economia.id }}/{{ economia.slug|escape }}">{{ economia.titulo|escape }}</a></h3>
-			<p>{{ economia.contenido|escape|truncatewords:"20" }}</p>
-			<p class="small"><span><b>{{ economia.fechacreado }}</b></span><br><a href="/autor/{{ economia.autor|escape }}/1/"><span>{{ economia.autor.user.first_name|escape }} {{ economia.autor.user.last_name|escape }}</span></a></p>
-		</div>
-	</div>
-	{% endfor %}
-	{% endif %}
-	<div class="padding-10"></div>
-</div>{% endif %}
 {% if economia %}
 <div class="flow">
 	<a href="/{{ ecncategoria.slug }}/1/"><div class="alert alert-dismissible alert-warning"><h4 class="text-left" data-toggle="tooltip" data-placement="bottom" title="Ver más de {{ ecncategoria.titulo }}">{{ ecncategoria.titulo }}</h4></div></a>
@@ -25,7 +10,7 @@
 		</div>
 		<div class="media-footer">
 			<p>{{ economia.contenido|truncatewords:"20" }}</p>
-			<p class="small"><span><b>{{ economia.fechacreado }}</b></span><br><a href="/autor/{{ economia.autor }}/1/"><span>{{ economia.autor.user.first_name }} {{ economia.autor.user.last_name }}</span></a></p>
+			<p class="small"><span><b>{{ economia.fechacreado }}</b></span><br><a href="/autor/{{ economia.autor }}/1/"><span>{{ economia.autor.first_name }} {{ economia.autor.last_name }}</span></a></p>
 		</div>
 	</div>
 	{% endfor %}

@@ -1,19 +1,4 @@
 {% load staticfiles %}
-{% if flow %}<div class="flow">
-	<a href="/{{ opicategoria.slug }}/1/"><div class="alert alert-dismissible alert-danger"><h4 class="text-left" data-toggle="tooltip" data-placement="bottom" title="Ver más de {{ opicategoria.titulo }}">{{ opicategoria.titulo }}</div></h4></a>
-	{% if opinion %}
-	{% for opinion in opinion %}
-	<div class="media">
-		<div class="media-body">
-			<h3 class="media-heading"><a href="/{{ opinion.categoria.slug }}/{{ opinion.id }}/{{ opinion.slug }}">{{ opinion.titulo }}</a></h3>
-			<p>{{ opinion.contenido|truncatewords:"20" }}</p>
-			<p class="small"><span><b>{{ opinion.fechacreado }}</b></span><br><a href="/autor/{{ opinion.autor }}/1/"><span>{{ opinion.autor.user.first_name }} {{ opinion.autor.user.last_name }}</span></a></p>
-		</div>
-	</div>
-	{% endfor %}
-	{% endif %}
-	<div class="padding-10"></div>
-</div>{% endif %}
 {% if opinion %}
 <div class="flow">
 	<a href="/{{ opicategoria.slug }}/1/"><div class="alert alert-dismissible alert-danger"><h4 class="text-left" data-toggle="tooltip" data-placement="bottom" title="Ver más de {{ opicategoria.titulo }}">{{ opicategoria.titulo }}</h4></div></a>
@@ -25,7 +10,7 @@
 		</div>
 		<div class="media-footer">
 			<p>{{ opinion.contenido|truncatewords:"20" }}</p>
-			<p class="small"><span><b>{{ opinion.fechacreado }}</b></span><br><a href="/autor/{{ opinion.autor }}/1/"><span>{{ opinion.autor.user.first_name }} {{ opinion.autor.user.last_name }}</span></a></p>
+			<p class="small"><span><b>{{ opinion.fechacreado }}</b></span><br><a href="/autor/{{ opinion.autor }}/1/"><span>{{ opinion.autor.first_name }} {{ opinion.autor.last_name }}</span></a></p>
 		</div>
 	</div>
 	{% endfor %}
