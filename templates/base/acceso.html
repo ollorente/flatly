@@ -1,12 +1,12 @@
 {% if acceso %}
 <label for="Titulo">Acceso</label>
-<select class="form-control" id="select">
+<select class="form-control" id="select" name="acceso">
 	<option selected>-- Seleccione tipo de acceso --</option>
 	{% for acceso in acceso %}<option value="{{ acceso.id }}">{{ acceso.tipo }}</option>{% endfor %}
 </select>
 {% endif %}
 <label for="Titulo">Acceso</label>
-<select class="form-control" id="select">
+<select class="form-control" id="select" name="acceso">
 	<option selected>-- Seleccione tipo de acceso --</option>
 	<option value="2">Logueago</option>
 	<option value="4">Privado</option>

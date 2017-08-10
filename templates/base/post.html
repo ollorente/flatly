@@ -6,7 +6,7 @@
 			<div class="alert alert-dismissable alert-success text-right"><a href="/editar/{{ post.autor }}/{{ post.id }}/{{ post.slug }}/" class="btn btn-link btn-xs" style="color:#fff;">Editar</a></div>
 			{% endif %}
 			<p><span><b>{{ post.fechacreado }}</b></span></p>
-			<h1 class="text-left" itemprop="name">{{ post.titulo }}</h1>
+			<h1 class="text-left" itemprop="name">{{ post.titulo|escape }}</h1>
 			<p>Por <a href="/autor/{{ post.autor }}/1/"><span itemprop="author">{{ post.autor.first_name }} {{ post.autor.last_name }}</span></a></p>
 			<p style="padding:10px;"></p>
 			{% if images %}<p><img src="/static/media/post/ciclistas-en-pasto.jpg" class="img-responsive img-rounded" alt="Responsive image"></p><p style="padding:10px;"></p>{% endif %}

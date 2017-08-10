@@ -79,10 +79,9 @@ class Post(models.Model):
 	categoria = models.ForeignKey(Categoria, null=True, blank=True, on_delete=models.CASCADE)
 	contenido = models.TextField()
 	autor = models.ForeignKey(User)
-	fechacreado = models.DateTimeField(auto_now_add=True, auto_now=False)
-	fechainicio = models.DateTimeField(auto_now_add=False, auto_now=True)
-	fechafinal = models.DateTimeField(auto_now_add=False, auto_now=False)
-	fechamodificado = models.DateTimeField(auto_now_add=False, auto_now=True)
+	fechacreado = models.DateTimeField(default=timezone.now)
+	fechainicio = models.DateTimeField(default=timezone.now)
+	fechamodificado = models.DateTimeField(default=timezone.now)
 	acceso = models.ForeignKey(Tipoacceso, null=True, blank=True, on_delete=models.CASCADE)
 	tags = models.TextField(null=True, blank=True)
 	vistas = models.IntegerField(null=True, blank=True)
@@ -91,6 +90,10 @@ class Post(models.Model):
 
 	def slug(self):
 		return slugify(self.titulo)
+
+	def publish(self):
+		self.fechainicio = timezone.now()
+		self.save()
 
 	def __str__(self):
 		return self.titulo
@@ -106,7 +109,7 @@ class Comentario(models.Model):
 	fecha = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return self.posts
+		return self.posts.titulo
 
 	class Meta:
 		ordering = ['-fecha']
