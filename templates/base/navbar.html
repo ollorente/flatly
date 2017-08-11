@@ -10,9 +10,9 @@
 				</div>
 				<div class="navbar-collapse collapse" id="navbar-main">
 					<ul class="nav navbar-nav">
-						<form action="/buscar" method="get" class="navbar-form navbar-left" role="search">
+						<form action="/buscar/1/" method="get" class="navbar-form navbar-left" role="search">
 							<div class="form-group">
-								<input name="q" maxlength="20" class="form-control bg-primary" aria-describedby="basic-addon2" placeholder="Buscar..." type="text" value="{{ query|escape }}">
+								<input name="q" maxlength="20" class="form-control bg-primary" aria-describedby="basic-addon2" placeholder="Buscar palabra clave..." type="text" value="{{ query|escape }}">
 								<button type="submit" class="btn btn-default">Buscar</button>
 							</div>
 						</form>

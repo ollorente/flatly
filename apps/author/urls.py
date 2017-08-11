@@ -8,6 +8,7 @@ from .views import *
 
 urlpatterns = [
     url(r'^$', indexHome, name='vista_home'),
+    url(r'^buscar/(?P<v>\d+)/', search, name='vista_buscar'),
     url(r'^configuracion/$', indexPost_crear, name='vista_configuracion'),
     url(r'^crear-post/$', indexPost_crear, name='vista_post_crear'),
     url(r'^autor/(?P<v>\d+)/$', indexAutores, name='vista_autores'),
