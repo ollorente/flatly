@@ -1,6 +1,5 @@
 {% if user.is_authenticated %}
 <div>
-	<div class="alert alert-dismissable alert-info text-right"><a href="/{{ post.categoria.slug }}/{{ post.id }}/{{ post.slug }}/" class="btn btn-link btn-xs" style="color:#fff;">Volver</a></div>
 	<h2 class="text-center"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Editar post</h2>
 	<hr>
 	<form method="POST">
@@ -8,11 +7,11 @@
 		<div class="col-md-12">
 			<div class="form-group">
 				<label for="Titulo">Título</label>
-				<input type="text" class="form-control" id="Titulo" value="{{ post.titulo }}" placeholder="Título" name="titulo" required>
+				<input type="text" class="form-control" id="Titulo" maxlength="140" value="{{ post.titulo|escape }}" placeholder="Título" name="titulo" required>
 			</div>
 			<div class="form-group">
 				<label for="Contenido">Contenido</label>
-				<textarea class="form-control" rows="15" id="Contenido" placeholder="Contenido..." name="contenido" required>{{ post.contenido }}</textarea>
+				<textarea class="form-control" rows="15" id="Contenido" placeholder="Contenido..." name="contenido" required>{{ post.contenido|escape }}</textarea>
 			</div>
 		</div>
 		<div class="col-md-12"><hr></div>
@@ -22,43 +21,31 @@
 					<div class="form-group">
 						{% include 'base/categoria.html' %}
 					</div>
-				</div>
-				<div class="col-md-6">
 					<div class="form-group">
 						{% include 'base/acceso.html' %}
 					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-12">
-			<div class="row">
-				<div class="col-md-6">
 					<div class="form-group">
-						<label for="Titulo">Fecha inicio</label>
-						<input type="datetime" class="form-control" value="{{ post.fechainicio }}" name="fechainicio" placeholder="0000-00-00 00:00:00">
+						<label for="Fechainicio">Fecha inicio</label>
+						<input type="text" class="form-control" id="Fechainicio" value="{{ post.fechainicio|date:'Y-m-d m:d:s' }}" name="fechainicio" placeholder="0000-00-00 00:00:00">
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
-						<label for="Titulo">Fecha finalización</label>
-						<input type="datetime" class="form-control" value="{{ post.fechafinal }}" name="fechafinal" placeholder="0000-00-00 00:00:00">
+						<label for="Tags">Tags</label>
+						<textarea name="tags" class="form-control" id="Tags" placeholder="Tags" rows="9">{{ post.tags|escape }}</textarea>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="col-md-12">
-			<div class="form-group">
-				<label for="Tags">Tags</label>
-				<input type="text" class="form-control" id="Tags" value="{{ post.tags }}" placeholder="Tags" name="tags">
-			</div>
-			<div class="form-group">
-				<div class="checkbox">
-					<label><input name="activo" type="checkbox"> Publicar</label>
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="checkbox">
+							<label><input name="activo" type="checkbox" {% if post.activo == True %}checked{% endif %}> Publicar</label>
+						</div>
+					</div>
+					<hr>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-12">
-			<hr>
 			<button type="submit" class="btn btn-default">Enviar</button>
 		</div>
 	</form>

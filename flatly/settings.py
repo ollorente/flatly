@@ -43,7 +43,6 @@ INSTALLED_APPS = [
 	'apps.buscar',
 	'apps.home',
 	'apps.login',
-#    'apps.post',
 	'apps.registro',
 ]
 

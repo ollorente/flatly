@@ -154,14 +154,15 @@ def indexPost_crear(request):
 			if form.is_valid():
 				post = form.save(commit=False)
 				post.autor = request.user
-#				post.fechainicio = timezone.now()
 				post.save()
+				acceso = Tipoacceso.objects.filter().order_by('tipo')
 				categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
 				cat = Categoria.objects.filter(activo=True, bloqueo=True).order_by('titulo')
 				us = 'Home'
 				uslink = '/'
 				vs = 'Crear post'
 				context = {
+					'acceso':acceso,
 					'categorias':categorias,
 					'cat':cat,
 					'us':us,
@@ -172,12 +173,14 @@ def indexPost_crear(request):
 				return render(request, 'post/post_crear.html', context)
 		else:
 			form = PostForm()
+		acceso = Tipoacceso.objects.filter().order_by('tipo')
 		categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
 		cat = Categoria.objects.filter(activo=True, bloqueo=True).order_by('titulo')
 		us = 'Home'
 		uslink = '/'
 		vs = 'Crear post'
 		context = {
+			'acceso':acceso,
 			'categorias':categorias,
 			'cat':cat,
 			'us':us,
@@ -198,8 +201,8 @@ def indexPost(request, u, v, w):
 			comentario.usuario = request.user
 			comentario.fecha = timezone.now()
 			comentario.save()
+			acceso = Tipoacceso.objects.filter().order_by('tipo')
 			categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
-			acceso = Tipoacceso.objects.all()
 			categoria = Categoria.objects.get(slug=u, activo=True, bloqueo=True)
 			post = Post.objects.get(id=v, activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now())
 			comentario = Comentario.objects.filter(posts=v)[:10]
@@ -211,8 +214,8 @@ def indexPost(request, u, v, w):
 			vslink = '/' + categoria.slug + '/1/'
 			ws = post.titulo
 			context = {
-				'categorias':categorias,
 				'acceso':acceso,
+				'categorias':categorias,
 				'categoria':categoria,
 				'post':post,
 				'comentario':comentario,
@@ -228,8 +231,8 @@ def indexPost(request, u, v, w):
 			return render(request, 'post/index.html', context)
 	else:
 		form = ComentarioForm()
+	acceso = Tipoacceso.objects.filter().order_by('tipo')
 	categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
-	acceso = Tipoacceso.objects.all()
 	categoria = Categoria.objects.get(slug=u, activo=True, bloqueo=True)
 	post = Post.objects.get(id=v, activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now())
 	comentario = Comentario.objects.filter(posts=v)[:10]
@@ -241,8 +244,8 @@ def indexPost(request, u, v, w):
 	vslink = '/' + categoria.slug + '/1/'
 	ws = post.titulo
 	context = {
-		'categorias':categorias,
 		'acceso':acceso,
+		'categorias':categorias,
 		'categoria':categoria,
 		'post':post,
 		'comentario':comentario,
@@ -259,33 +262,81 @@ def indexPost(request, u, v, w):
 
 
 def indexPost_editar(request, v, w, x):
-	if request.user.username == v:
-		categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
-		categoria = User.objects.get(username=v, is_active=True, is_staff=False)
-		cat = Categoria.objects.filter(activo=True, bloqueo=True).order_by('titulo')
-		post = Post.objects.get(id=w, activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now()).order_by('-fechacreado')
-		link = Post.objects.filter(activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now()).order_by('-vistas')[:10]
-		us = 'Home'
-		uslink = '/'
-		vs = categoria.first_name + ' ' + categoria.last_name
-		vslink = '/autor/' + categoria.username + '/1/'
-		ws = 'Editar'
-		wslink = '/backoffice/mis-post/1/'
-		xs = post.titulo
-		context = {
-			'categorias':categorias,
-			'cat':cat,
-			'post':post,
-			'link':link,
-			'us':us,
-			'uslink':uslink,
-			'vs':vs,
-			'vslink':vslink,
-			'ws':ws,
-			'wslink':wslink,
-			'xs':xs,
-		}
-		return render(request, 'post/post_editar.html', context)
+	if request.user.is_authenticated():
+		if request.user.username == v:
+			post = Post.objects.get(id=w)
+			if request.method == "POST":
+				form = PostForm(request.POST, instance=post)
+				if form.is_valid():
+					post = form.save(commit=False)
+					post.autor = request.user
+					post.save()
+					acceso = Tipoacceso.objects.filter().order_by('tipo')
+					categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
+					categoria = User.objects.get(username=v, is_active=True, is_staff=False)
+					cat = Categoria.objects.filter(activo=True, bloqueo=True).order_by('titulo')
+					post = Post.objects.get(id=w, activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now())
+					link = Post.objects.filter(activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now()).order_by('-vistas')[:10]
+					us = 'Home'
+					uslink = '/'
+					vs = categoria.first_name + ' ' + categoria.last_name
+					vslink = '/autor/' + categoria.username + '/1/'
+					ws = 'Editar'
+					xs = w
+					ys = post.titulo
+					yslink = '/' + post.categoria.slug + '/' + w + '/' + x + '/'
+					context = {
+						'acceso':acceso,
+						'categorias':categorias,
+						'cat':cat,
+						'post':post,
+						'link':link,
+						'us':us,
+						'uslink':uslink,
+						'vs':vs,
+						'vslink':vslink,
+						'ws':ws,
+						'xs':xs,
+						'ys':ys,
+						'yslink':yslink,
+						'form': form,
+					}
+					return render(request, 'post/post_editar.html', context)
+			else:
+				form = PostForm(instance=post)
+			acceso = Tipoacceso.objects.filter().order_by('tipo')
+			categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
+			categoria = User.objects.get(username=v, is_active=True, is_staff=False)
+			cat = Categoria.objects.filter(activo=True, bloqueo=True).order_by('titulo')
+			post = Post.objects.get(id=w, activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now())
+			link = Post.objects.filter(activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now()).order_by('-vistas')[:10]
+			us = 'Home'
+			uslink = '/'
+			vs = categoria.first_name + ' ' + categoria.last_name
+			vslink = '/autor/' + categoria.username + '/1/'
+			ws = 'Editar'
+			xs = w
+			ys = post.titulo
+			yslink = '/' + post.categoria.slug + '/' + w + '/' + x + '/'
+			context = {
+				'acceso':acceso,
+				'categorias':categorias,
+				'cat':cat,
+				'post':post,
+				'link':link,
+				'us':us,
+				'uslink':uslink,
+				'vs':vs,
+				'vslink':vslink,
+				'ws':ws,
+				'xs':xs,
+				'ys':ys,
+				'yslink':yslink,
+				'form': form,
+			}
+			return render(request, 'post/post_editar.html', context)
+		else:
+			return HttpResponseRedirect('/')
 	else:
 		return HttpResponseRedirect('/')
 
