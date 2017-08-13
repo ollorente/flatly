@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <div>
-	<div class="alert alert-dismissible alert-success"><h1 class="text-center">{{ categoria.titulo|escape }}</h1></div>
+	<div class="alert alert-dismissable alert-info text-center"><h4 style="margin-bottom:-5px;">{{ categoria.titulo|escape }}</h4></div>
 	{% if post %}
 	{% for post in post %}
 	<div class="media">
@@ -30,5 +30,4 @@
 	<div class="well">No hay posts para mostrar.</div>
 	{% endif %}
 	<div class="padding-10"></div>
-	{% include 'base/ads.html' %}
 </div>

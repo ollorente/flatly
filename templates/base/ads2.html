@@ -1,8 +1,8 @@
 {% load staticfiles %}
 <div class="pub-lineas padding-10 text-center" style="border-top:solid 1px #ccc; border-bottom:solid 1px #ddd; margin-bottom:10px;">
-{% if ads %}
-{% for ads in ads %}
-<a href="{{ ads.clickurl }}" target="_blank"><img src="/static/media/ads/{{ ads.add_image }}" style="width:100%; max-width:728px;"></a>
+{% if ads2 %}
+{% for ads2 in ads2 %}
+<a href="{{ ads2.clickurl }}" target="_blank"><img src="/static/media/ads/{{ ads2.add_image }}" style="width:100%; max-width:728px;"></a>
 {% endfor %}
 {% else %}
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

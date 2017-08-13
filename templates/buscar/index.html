@@ -4,26 +4,15 @@
 
 {% block content %}
 	<div class="row">
-		<div class="col-sm-12 col-md-9">
-			<div class="row">
-				<div class="col-sm-4 col-md-4">
-					{% include 'base/leadavatar.html' %}
-					{% include 'base/seguidores.html' %}
-					{% include 'base/siguiendo.html' %}
-				</div>
-				<div class="col-sm-8 col-md-8">
-					{% include 'base/buscar.html' %}
-				</div>
-				<div class="col-sm-12 col-md-12">
-					{% include 'base/ads.html' %}
-					<div class="padding-10"></div>
-				</div>
-			</div>
+		<div class="col-sm-8">
+			{% include 'base/ads.html' %}
+			{% include 'base/buscar.html' %}
+			{% include 'base/ads2.html' %}
 		</div>
-		<div class="col-sm-12 col-md-3">
+		<div class="col-sm-4">
 			<aside>
-				{% include 'base/banner.html' %}
 				{% include 'base/link.html' %}
+				{% include 'base/banner.html' %}
 			</aside>
 		</div>
 	</div>

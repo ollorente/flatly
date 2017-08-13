@@ -1,7 +1,18 @@
 {% load staticfiles %}
 <div class="pub-lineas padding-10 text-center" style="border-top:solid 1px #ccc; border-bottom:solid 1px #ddd; margin-bottom:10px;">
-{% if not ads %}
-<a href="."><img src="/static/media/ads/anh1.png" style="width:100%; max-width:200px;"></a>
+{% if banner %}
+{% for banner in banner %}
+<a href="{{ banner.clickurl }}" target="_blank"><img src="/static/media/ads/{{ banner.add_image }}" style="width:100%; max-width:200px;"></a>
+{% endfor %}
 {% else %}
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- SUP - Derecha -->
+  <ins class="adsbygoogle"
+     style="display:inline-block;width:200px;height:200px"
+     data-ad-client="ca-pub-9745962856680732"
+     data-ad-slot="2445489396"></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 {% endif %}
 </div>

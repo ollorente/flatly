@@ -10,6 +10,9 @@
 			<h4 class="media-heading"><a href="/autor/{{ autor.usuario.username|escape }}/1/">{{ autor.usuario.first_name|escape }} {{ autor.usuario.last_name|escape }}</a></h4>
 			<p class="small">{% if autor.ciudad %}<span>{{ autor.ciudad }}</span>{% if autor.estado %} - <span>{{ autor.estado }}</span>{% endif %}{% endif %}{% if autor.ciudad and autor.pais %}<br>{% endif %}{% if autor.pais %}<span><b>{{ autor.pais }}</b></span>{% endif %}</p>
 		</div>
+		<div class="media-right">
+			{% if postcount %}<span class="label label-default"><b>{{ postcount }}</b> post</span>{% endif %}
+		</div>
 	</div>
 	{% endfor %}
 	<div>
