@@ -39,11 +39,12 @@ INSTALLED_APPS = [
 	'django.contrib.staticfiles',
 
 	'apps.author',
-	'apps.backoffice',
-	'apps.buscar',
-	'apps.home',
-	'apps.login',
-	'apps.registro',
+	# 'apps.backoffice',
+	# 'apps.buscar',
+	# 'apps.home',
+	# 'apps.login',
+    # 'apps.post',
+	# 'apps.registro',
 ]
 
 MIDDLEWARE = [

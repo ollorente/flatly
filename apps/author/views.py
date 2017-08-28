@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404
@@ -9,6 +10,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
+from django.utils.encoding import *
 
 from .models import *
 from .forms import *
@@ -200,6 +202,7 @@ def indexPost_crear(request):
 				ads2 = Banner.objects.filter(catid=1, state=True).order_by('?')[:1]
 				banner = Banner.objects.filter(catid=2, state=True).order_by('?')[:1]
 				cat = Categoria.objects.filter(activo=True, bloqueo=True).order_by('titulo')
+				link2 = Post.objects.filter(activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now()).order_by('-vistas')[:10]
 				us = 'Home'
 				uslink = '/'
 				vs = 'Crear post'
@@ -210,6 +213,7 @@ def indexPost_crear(request):
 					'ads2':ads,
 					'banner':banner,
 					'cat':cat,
+					'link2':link2,
 					'us':us,
 					'uslink':uslink,
 					'vs':vs,
@@ -224,6 +228,7 @@ def indexPost_crear(request):
 		ads2 = Banner.objects.filter(catid=1, state=True).order_by('?')[:1]
 		banner = Banner.objects.filter(catid=2, state=True).order_by('?')[:1]
 		cat = Categoria.objects.filter(activo=True, bloqueo=True).order_by('titulo')
+		link2 = Post.objects.filter(activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now()).order_by('-vistas')[:10]
 		us = 'Home'
 		uslink = '/'
 		vs = 'Crear post'
@@ -234,6 +239,7 @@ def indexPost_crear(request):
 			'ads2':ads2,
 			'banner':banner,
 			'cat':cat,
+			'link2':link2,
 			'us':us,
 			'uslink':uslink,
 			'vs':vs,
@@ -245,6 +251,7 @@ def indexPost_crear(request):
 
 
 def indexPost(request, u, v, w):
+	client_ip = request.META['REMOTE_ADDR']
 	if request.method == "POST":
 		form = ComentarioForm(request.POST)
 		if form.is_valid():
@@ -288,6 +295,7 @@ def indexPost(request, u, v, w):
 				'vslink':vslink,
 				'ws':ws,
 				'form': form,
+				'ip':client_ip,
 			}
 			return render(request, 'post/index.html', context)
 	else:
@@ -299,6 +307,7 @@ def indexPost(request, u, v, w):
 	comentario = Comentario.objects.filter(posts=v, usuario__is_active=True, usuario__is_staff=False)[:10]
 	comentariocount = Comentario.objects.filter(posts=v, usuario__is_active=True, usuario__is_staff=False).count()
 	megustacount = Megusta.objects.filter(graf=v).count()
+	view = Views_Post.objects.filter(post__id=v).count()
 	ads = Banner.objects.filter(catid=1, state=True).order_by('?')[:1]
 	ads2 = Banner.objects.filter(catid=1, state=True).order_by('?')[:1]
 	ads3 = Banner.objects.filter(catid=1, state=True).order_by('?')[:1]
@@ -328,6 +337,7 @@ def indexPost(request, u, v, w):
 		'vslink':vslink,
 		'ws':ws,
 		'form': form,
+		'view':view,
 	}
 	return render(request, 'post/index.html', context)
 
@@ -541,7 +551,7 @@ def search(request, v):
 	uslink = '/'
 	vs = 'Buscar'
 	ws = page
-	xs = query
+	xs = '() ' + query
 	context = {
 		'categorias':categorias,
 		'ads':ads,
@@ -557,3 +567,237 @@ def search(request, v):
 		'query':query
 	}
 	return render(request, 'buscar/index.html', context)
+
+
+def indexLogin(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/')
+	else:
+		mensaje = ""
+		if request.user.is_authenticated():
+			return HttpResponseRedirect('/blog/1/')
+		else:
+			categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
+			link2 = Post.objects.filter(activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now()).order_by('-vistas')[:5]
+			if request.method == "POST":
+				form = LoginForm(request.POST)
+				if form.is_valid():
+					username = form.cleaned_data['username']
+					password = form.cleaned_data['password']
+					usuario = authenticate(username=username, password=password)
+					if usuario is not None and usuario.is_active:
+						login(request, usuario)
+						return HttpResponseRedirect('/blog/1/')
+					else:
+						alert = 'danger'
+						mensaje = 'Usuario y/o password incorrecto'
+			form = LoginForm()
+			us = 'Home'
+			uslink = '/'
+			vs = 'Login'
+			context = {
+				'categorias':categorias,
+				'link2':link2,
+				'us':us,
+				'uslink':uslink,
+				'vs':vs,
+				'form':form,
+				'mensaje':mensaje,
+			}
+			return render(request, 'home/login.html', context)
+
+
+def indexLogout(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
+
+def indexRegister(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/')
+	else:
+		form = RegisterForm()
+		if request.method == "POST":
+			form = RegisterForm(request.POST)
+			if form.is_valid():
+				usuario = form.cleaned_data['username']
+				first_name = form.cleaned_data['first_name']
+				last_name = form.cleaned_data['last_name']
+				email = form.cleaned_data['email']
+				password_one = form.cleaned_data['password_one']
+				password_two = form.cleaned_data['password_two']
+				u = User.objects.create_user(username=usuario, first_name=first_name, last_name=last_name, email=email, password=password_one)
+				u.save()
+				categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
+				link2 = Post.objects.filter(activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now()).order_by('-vistas')[:10]
+				us = 'Home'
+				uslink = '/'
+				vs = 'Registro'
+				context = {
+					'categorias':categorias,
+					'link2':link2,
+					'us':us,
+					'uslink':uslink,
+					'vs':vs,
+				}
+				return render(request, 'registro/thanks_register.html', context)
+			else:
+				categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
+				link2 = Post.objects.filter(activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now()).order_by('-vistas')[:10]
+				us = 'Home'
+				uslink = '/'
+				vs = 'Registro'
+				context = {
+					'categorias':categorias,
+					'link2':link2,
+					'us':us,
+					'uslink':uslink,
+					'vs':vs,
+					'form':form,
+				}
+				return render(request, 'registro/index.html', context)
+		categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
+		link2 = Post.objects.filter(activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now()).order_by('-vistas')[:10]
+		us = 'Home'
+		uslink = '/'
+		vs = 'Registro'
+		context = {
+			'categorias':categorias,
+			'link2':link2,
+			'us':us,
+			'uslink':uslink,
+			'vs':vs,
+			'form':form,
+		}
+		return render(request, 'registro/index.html', context)
+
+
+def indexBackoffice(request):
+	if request.user.is_authenticated():
+		categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
+		us = 'Backoffice'
+		context = {
+			'categorias':categorias,
+			'us':us,
+		}
+		return render(request, 'backoffice/index.html', context)
+	else:
+		return HttpResponseRedirect('/')
+
+
+def indexMis_post(request, w):
+	if request.user.is_authenticated():
+		categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
+		autor = request.user
+		post = Post.objects.filter(autor=autor, activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now()).order_by('-fechacreado')
+		postcount = Post.objects.filter(autor=autor, activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now()).count()
+		paginator = Paginator(post, 10)
+		try:
+			page = int(w)
+		except:
+			page = 1
+		try:
+			post = paginator.page(page)
+		except (EmptyPage, InvalidPage):
+			post = paginator.page(paginator.num_pages)
+		ads = Banner.objects.filter(catid=1, state=True).order_by('?')[:1]
+		banner = Banner.objects.filter(catid=2, state=True).order_by('?')[:1]
+		us = 'Backoffice'
+		uslink = '/backoffice/'
+		vs = 'Mis post'
+		ws = w
+		context = {
+			'categorias':categorias,
+			'post':post,
+			'postcount':postcount,
+			'ads':ads,
+			'banner':banner,
+			'us':us,
+			'uslink':uslink,
+			'vs':vs,
+			'ws':ws,
+		}
+		return render(request, 'backoffice/mispost.html', context)
+	else:
+		return HttpResponseRedirect('/')
+
+
+def indexComentarios(request, w):
+	if request.user.is_authenticated():
+		categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
+		autor = request.user
+		# post = Post.objects.filter(autor=autor, activo=True, bloqueo=True, autor__is_active=True, autor__is_staff=False, fechainicio__lte=timezone.now()).order_by('-fechacreado')
+		comentario = Comentario.objects.filter(posts__autor=autor, usuario__is_active=True, usuario__is_staff=False)
+		comentariocount = Comentario.objects.filter(posts__autor=autor, usuario__is_active=True, usuario__is_staff=False).count()
+		paginator = Paginator(comentario, 10)
+		try:
+			page = int(w)
+		except:
+			page = 1
+		try:
+			comentario = paginator.page(page)
+		except (EmptyPage, InvalidPage):
+			comentario = paginator.page(paginator.num_pages)
+		smart_text(comentario, encoding='utf-8', strings_only=False, errors='strict')
+		ads = Banner.objects.filter(catid=1, state=True).order_by('?')[:1]
+		banner = Banner.objects.filter(catid=2, state=True).order_by('?')[:1]
+		us = 'Backoffice'
+		uslink = '/backoffice/'
+		vs = 'Comentarios'
+		ws = w
+		context = {
+			'categorias':categorias,
+			'comentario':comentario,
+			'comentariocount':comentariocount,
+			'ads':ads,
+			'banner':banner,
+			'us':us,
+			'uslink':uslink,
+			'vs':vs,
+			'ws':ws,
+		}
+		return render(request, 'backoffice/comentarios.html', context)
+	else:
+		return HttpResponseRedirect('/')
+
+
+def indexMis_seguidores(request, w):
+	if request.user.is_authenticated():
+		categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
+		ads = Banner.objects.filter(catid=1, state=True).order_by('?')[:1]
+		banner = Banner.objects.filter(catid=2, state=True).order_by('?')[:1]
+		us = 'Backoffice'
+		uslink = '/backoffice/'
+		vs = 'Mis seguidores'
+		context = {
+			'categorias':categorias,
+			'ads':ads,
+			'banner':banner,
+			'us':us,
+			'uslink':uslink,
+			'vs':vs,
+		}
+		return render(request, 'backoffice/index.html', context)
+	else:
+		return HttpResponseRedirect('/')
+
+
+def indexLos_que_sigo(request, w):
+	if request.user.is_authenticated():
+		categorias = Categoria.objects.filter(menu=1, activo=True, bloqueo=True).order_by('titulo')
+		ads = Banner.objects.filter(catid=1, state=True).order_by('?')[:1]
+		banner = Banner.objects.filter(catid=2, state=True).order_by('?')[:1]
+		us = 'Backoffice'
+		uslink = '/backoffice/'
+		vs = 'Los que sigo'
+		context = {
+			'categorias':categorias,
+			'ads':ads,
+			'banner':banner,
+			'us':us,
+			'uslink':uslink,
+			'vs':vs,
+		}
+		return render(request, 'backoffice/index.html', context)
+	else:
+		return HttpResponseRedirect('/')

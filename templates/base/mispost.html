@@ -1,0 +1,45 @@
+{% if post %}
+<table class="table table-striped">
+  <thead>
+    <tr class="active">
+      <th>#</th>
+      <th>Título</th>
+      <th>Estado</th>
+      <th>Categoría</th>
+      <th>Acceso</th>
+      <th>Fecha</th>
+      <th>Vistas</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for post in post %}
+    <tr>
+      <th class="text-center" scope="row">{{ post.pk }}</th>
+      <td>
+        <p><a href="/editar/{{ post.autor.username }}/{{ post.id }}/{{ post.slug }}/" style="text-decoration:none;">{{ post.titulo }}</a></p>
+        <p>{{ post.contenido|truncatewords:"15"|escape }}</p>
+      </td>
+      <td class="text-center"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></td>
+      <td class="text-center">{{ post.categoria }}</td>
+      <td class="text-center">{{ post.acceso }}</td>
+      <td class="text-center">{{ post.fechacreado|date:'Y-m-d' }}</td>
+      <td class="text-center">{{ post.vistas }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div>
+  <ul class="pager">
+    {% if post.has_previous %}
+    <li class="previous"><a href="/backoffice/mis-post/1/"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a></li>
+    <li class="previous"><a href="/backoffice/mis-post/{{ post.previous_page_number }}/"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a></li>
+    {% endif %}
+    {% if post.has_next %}
+    <li class="next"><a href="/backoffice/mis-post/{{ post.paginator.num_pages }}/"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></a></li>
+    <li class="next"><a href="/backoffice/mis-post/{{ post.next_page_number }}/"><span class="glyphicon glyphicon-step-forward	" aria-hidden="true"></span></a></li>
+    {% endif %}
+  </ul>
+</div>
+{% else %}
+<div class="well">No hay posts para mostrar.</div>
+{% endif %}

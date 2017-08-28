@@ -67,6 +67,11 @@ class AdminBanner_track(admin.ModelAdmin):
     model = Banner_track
 
 
+class AdminViews_Post(admin.ModelAdmin):
+    list_display = ["__str__", "ip", "fecha", "pk"]
+    model = Views_Post
+
+
 admin.site.register(Pais, AdminPais)
 admin.site.register(Perfil, AdminPerfil)
 admin.site.register(Tipoacceso, AdminTipoacceso)
@@ -78,3 +83,4 @@ admin.site.register(Siguiendo, AdminSiguiendo)
 admin.site.register(Banner_categoria, AdminBanner_categoria)
 admin.site.register(Banner, AdminBanner)
 admin.site.register(Banner_track, AdminBanner_track)
+admin.site.register(Views_Post, AdminViews_Post)

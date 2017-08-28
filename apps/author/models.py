@@ -194,3 +194,18 @@ class Banner_track(models.Model):
 
 	def __str__(self):
 		return self.banner_id.name
+
+
+class Views_Post(models.Model):
+	post = models.ForeignKey(Post)
+	ip = models.CharField(max_length=30)
+	fecha = models.DateTimeField(default=timezone.now)
+
+	def view(self):
+		self.post = request.GET[v]
+		self.ip = request.META['REMOTE_ADDR']
+		self.fecha = timezone.now()
+		self.save()
+
+	def __str__(self):
+		return self.post
